@@ -1,0 +1,19 @@
+{% extends 'admin/base_admin.html.twig' %}
+{% block title %}Edition de Badge{% endblock %}
+
+{% block body %}
+<div class="row">
+    {{ form_start(badgeEditForm, {'attr': {'class': 'col s12'}}) }}
+    {{ form_widget(badgeEditForm) }}
+    <button type="submit" class="btn">Enregistrer</button>
+    {{ form_end(badgeEditForm) }}
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+
+    </script>
+{% endblock %}

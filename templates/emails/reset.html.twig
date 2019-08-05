@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col m8 push-m2 s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center primary-color">Réinitialisation du Mot de Passe</span>
+                    <p>Bonjour {{ user.username }}, Vous avez demandé la réinitialisation de votre mot de passe</p>
+                    <a href="{{ url('password_new', {'id': user.id, 'token': user.token}) }}">Cliquer ici pour réinitialiser votre mot de passe</a>
+                    <br>
+                    <p>Ou Copiez ce lien dans votre navigateur</p>
+                    <a href="{{ url('password_new', {'id': user.id, 'token': user.token}) }}">{{ url('password_new', {'id': user.id, 'token': user.token}) }}</a>
+                    <br>
+                    <p>Si vous n'avez pas demandé de réinitialisation, ne faites pas attention à ce mail</p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ url('homepage') }}">Envirias.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

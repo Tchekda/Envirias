@@ -1,0 +1,67 @@
+{% extends 'admin/base_admin.html.twig' %}
+{% block title %}Validation{% endblock %}
+{% block body %}
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br><br>
+            <h1 class="header center orange-text">Validation des Posts</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">C'est ici que vous pourrez approuver (ou pas) la validation d'un
+                    post</h5>
+            </div>
+            <!--<div class="row center">
+                <a href="http://materializecss.com/getting-started.html" id="download-button"
+                   class="btn-large waves-effect waves-light orange">Get Started</a>
+            </div>-->
+            <br><br>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="section">
+            <table class="striped highlight centered responsive-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Utilisateur</th>
+                    <th>Image</th>
+                    <th>Contenu</th>
+                    <th>Tags</th>
+                    <th>Editer</th>
+                    <th>Valider</th>
+                    <th>Rejeter</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td>Par <a href="{{ path('show_user', {'id': post.user.id}) }}">{{ post.user.username }}</a></td>
+                        {% if post.picture %}
+                            <td><img src="{{ asset('uploads/posts/'~post.picture) }}" width="200px" alt=""></td>
+                        {% else %}
+                            <td><i class="material-icons circle red-text">highlight_off</i></td>
+                        {% endif %}
+                        <td>{{ post.content }}</td>
+                        <td>{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %},{% endif %} {% else %}Aucun tag{% endfor %}</td>
+                        <td><a href="{{ path('post_edit', {'id': post.id}) }}"><i class="material-icons green-text">edit</i></a></td>
+                        <td>
+                            <form action="{{ path('admin_post_validate', {'id': post.id}) }}" method="post">
+                                <input value="10" type="number" name="value" id="value" width="15px">
+                                <button type="submit" class="btn waves-effect waves-light transparent"><i class="material-icons green-text">check</i></button>
+                            </form>
+                        </td>
+                        <td><a href="{{ path('admin_post_delete', {'id': post.id}) }}"><i class="material-icons red-text">highlight_off</i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+

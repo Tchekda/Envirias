@@ -1,0 +1,53 @@
+{% extends 'admin/base_admin.html.twig' %}
+{% block title %}Utilisateurs{% endblock %}
+{% block body %}
+    <table class="striped highlight centered responsive-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Pseudo</th>
+            <th>E-Mail</th>
+            <th>Roles</th>
+            <th>Badges</th>
+            <th>Eco-Score Total</th>
+            <th>Eco-Score Mensuel</th>
+            <th>Bio</th>
+            <th>Ville</th>
+            <th>Site Web</th>
+            <th>Facebook</th>
+            <th>Twitter</th>
+            <th>Instagram</th>
+            <th>Logo</th>
+            <th>Posts</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('homepage', {'_switch_user' : user.username}) }}">{{ user.id }}</a>{% else %}{{ user.id }}{% endif %}</td>
+                <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a></td>
+                <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                <td>{% for role in user.roles %}{{ role }}{% if not loop.last %},{% endif %} {% endfor %}</td>
+                <td>{% for badge in user.badges %}<i class='material-icons  {{ badge.color }}-text {{ badge.bgColor }}'>{{ badge.icon }}</i> {% endfor %}</td>
+
+                <td>{{ user.totalScore }}</td>
+                <td>{{ user.monthScore }}</td>
+                <td>{{ user.biography|truncate(50) }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.website }}</td>
+                <td>{{ user.facebook }}</td>
+                <td>{{ user.twitter }}</td>
+                <td>{{ user.instagram }}</td>
+                <td>{% if user.picture is not null %}<img class="circle" src="{{ asset('uploads/users/' ~ user.picture ) }}" width="40px" height="40px" alt="User Picture">{% endif %}</td>
+                <td>{{ user.posts|length }}</td>
+                <td><a href="{{ path('admin_user_edit', {'id': user.id}) }}"><i class="material-icons circle green-text">create</i></a></td>
+                <td><a href="{{ path('admin_user_delete', {'id': user.id}) }}"><i class="material-icons circle red-text">delete</i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

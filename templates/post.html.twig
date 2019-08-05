@@ -1,0 +1,60 @@
+<div class="card">
+    {% set liked = false %}
+    <div class="card-content">
+        <span class="card-title">
+            {% if app.request.pathInfo != path('post_show', {'id': post.id}) %}
+            <a class="grey-text" href="{{ path('post_show', {'id': post.id}) }}">
+                {{ post.content }}
+            </a>
+            {% else %}
+                <p class="grey-text">{{ post.content }}</p>
+            {% endif %}
+        </span>
+        <p class="light">Par <a class="green-text
+                    {% if post.user.badges|length > 0 %}
+                    tooltipped" data-position="top" data-tooltip="
+                        {% for badge in post.user.badges %}
+                            <i class='material-icons  {{ badge.color }}-text {{ badge.bgColor }}'>{{ badge.icon }}</i>
+                        {% endfor %}
+                    {% endif %}
+"
+                    href="{{ path('user_show', {'id': post.user.id}) }}">{{ post.user.username }}</a>
+            le {{ post.createdAt|localizeddate('medium', 'none', null, null, "EEEE d MMMM")|capitalize }}
+            ({{ post.createdAt|ago }})</p>
+        <div class="card-image">
+            {% if post.picture %}
+                <img src="{{ asset('uploads/posts/' ~ post.picture) }}" class="post-img" alt="Post Picture">
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
+                {% if post.user.id == app.user.id and post.validated == false %}
+                    <a href="{{ path('post_edit', {'id': post.id}) }}"
+                       class="btn-floating halfway-fab green">
+                        <i class="material-icons white-text"
+                           style="font-size: 30px">edit</i></a>
+                {% elseif post.user.id == app.user.id and post.validated == true %}
+                    <a href="{{ path('post_delete', {'id': post.id}) }}"
+                       class="btn-floating halfway-fab white">
+                        <i class="material-icons red-text"
+                           style="font-size: 30px">delete</i></a>
+                {% else %}
+                    {% for like in post.likes %}
+                        {% if like.user.id == app.user.id %}
+                            {% set liked = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <a href="{{ path('ajax_post_like', {'id': post.id}) }}" post-id="{{ post.id }}"
+                       class="js_like_button btn-floating halfway-fab {{ liked ? 'green' : 'white' }}">
+                        <i class="material-icons {{ liked ? 'white-text' : "green-text" }}"
+                           style="font-size: 30px">thumb_up</i></a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-action center">
+        <p id="post-likes-{{ post.id }}">Likes : {{ post.likes|length }}</p>
+        {% for tag in post.tags %}
+            <a href="{{ path('tag_show', {'id': tag.id}) }}"><span
+                        class="chip green-text">#{{ tag.name }}</span></a>
+        {% endfor %}
+    </div>
+</div>

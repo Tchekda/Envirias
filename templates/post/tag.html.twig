@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ tag.name }} - Tag {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col s6 push-s3">
+            {% for post in tag.posts %}
+                {% include 'post.html.twig' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+

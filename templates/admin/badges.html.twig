@@ -1,0 +1,36 @@
+{% extends 'admin/base_admin.html.twig' %}
+{% block title %}Badges{% endblock %}
+{% block body %}
+    <div class="center">
+        <a class="btn" href="{{ path('admin_badge_new') }}">Créer un badge</a>
+        <br>
+        <h3 class="red-text">Ne pas toucher aux icones qui comptents les postes sans prévenir Tchekda</h3>
+    </div>
+    <table class="striped highlight centered responsive-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Icon</th>
+            <th>Poids</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for badge in badges %}
+            <tr>
+                <td>{{ badge.id }}</td>
+                <td>{{ badge.title }}</td>
+                <td><i class='material-icons  {{ badge.color }}-text {{ badge.bgColor }}'>{{ badge.icon }}</i></td>
+                <td>{{ badge.cost }}</td>
+                <td><a href="{{ path('admin_badge_edit', {'id': badge.id}) }}"><i class="material-icons green-text">edit</i></a></td>
+                <td><a href="{{ path('admin_badge_delete', {'id': badge.id}) }}"><i class="material-icons red-text">delete</i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+{% endblock %}
+

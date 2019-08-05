@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte de {{ user.username }}{% endblock %}
+
+{% block body %}
+    <div id="index-banner">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <h1 class="header center text-lighten-2">{{ user.username }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="section">
+
+            <!--   Icon Section   -->
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div class="card-content">
+                              <span class="card-title center">
+                                  {% if "ROLE_ADMIN" in user.roles %}
+                                      {% set border = 'red' %}
+                                  {% elseif "ROLE_CERTIFIED" in user.roles %}
+                                      {% set border = 'yellow' %}
+                                  {% else %}
+                                      {% set border = 'green' %}
+                                  {% endif %}
+
+                                <img src="{{ asset('uploads/users/' ~ user.picture ) | imagine_filter('profile_thumb') }}"
+                                     class="circle responsive-img border-{{ border }}" width="110px" alt="User Logo"><br>
+                                Infos
+                              </span>
+                            <div class="section">
+                                <p class="inline">Eco Score :
+                                <div class="badge right">{{ user.totalScore }} (+{{ user.monthScore }})</div>
+                                </p>
+                                {% if user.badges|length > 0 %}
+                                <p class="inline">Badges :
+                                <div class="badges right">
+                                    {% for badge in user.badges %}
+                                        <i class="material-icons tooltipped {{ badge.color }}-text {{ badge.bgColor }}"
+                                           data-position="top" data-tooltip="{{ badge.title }}">{{ badge.icon }}</i>
+                                    {% endfor %}
+                                </div>
+                                </p>
+                                {% endif %}
+                                {% if user.biography %}
+                                    <p>{{ user.biography }}</p>
+                                {% endif %}
+                                {% if user.city %}
+                                    <p class="inline">Ville :
+                                    <div class="badge right">{{ user.city }}</div>
+                                    </p>
+                                {% endif %}
+                            </div>
+                            {% if user.website or user.twitter or user.facebook or user.instagram %}
+                            <div class="divider"></div>
+                            <div class="section">
+                                {% if user.website %}
+                                    <p class="inline">Site Web : <a href="https://{{ user.website }}"
+                                                     class="right">{{ user.website }}</a></p>
+                                {% endif %}
+                                {% if user.twitter %}
+                                    <p class="inline">Twittter : <a href="https://twitter.com/{{ user.twitter }}"
+                                                     class="right">{{ user.twitter }}</a></p>
+                                {% endif %}
+                                {% if user.facebook %}
+                                    <p class="inline">Facebook: <a href="https://facebook.com/{{ user.facebook }}"
+                                                    class="right">{{ user.facebook }}</a></p>
+                                {% endif %}
+                                {% if user.instagram %}
+                                    <p class="inline">Intagram : <a href="https://intagram.com/{{ user.instagram }}"
+                                                     class="right">{{ user.instagram }}</a></p>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if app.user.id == user.id %}
+                            <div class="card-action">
+                                <a class="green-text" href="{{ path('user_edit') }}">Modifier mes Information</a>
+                                <a class="orange-text" href="{{ path('user_password_change') }}">Modifier le mot de passe</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col s12 m8">
+                    <div class="card">
+
+                        <div class="card-tabs">
+                            <ul class="tabs tabs-fixed-width ">
+                                <li class="tab green-text"><a class="active green-text" href="#posts">Posts</a></li>
+                                <li class="tab green-text"><a href="#likes" class="green-text">Likes</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-content green lighten-4">
+                            <div id="posts">
+                                {% for post in posts if post.validated %}
+                                    {% include 'post.html.twig' %}
+                                {% endfor %}
+                            </div>
+                            <div id="likes">
+                                {% for like in likes %}
+                                    {% set post =like.post %}
+                                    {% include 'post.html.twig' %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

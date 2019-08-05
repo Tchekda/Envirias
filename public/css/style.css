@@ -1,0 +1,78 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+
+p {
+    line-height: 2rem;
+}
+
+.sidenav-trigger {
+    color: #26a69a;
+}
+
+.parallax-container {
+    min-height: 380px;
+    line-height: 0;
+    height: auto;
+    color: rgba(255, 255, 255, .9);
+}
+
+.parallax-container .section {
+    width: 100%;
+}
+
+@media only screen and (max-width: 992px) {
+    .parallax-container .section {
+        position: absolute;
+        top: 40%;
+    }
+
+    #index-banner .section {
+        top: 10%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #index-banner .section {
+        top: 0;
+    }
+}
+
+footer.page-footer {
+    margin: 0;
+}
+
+.post-img {
+    display: block;
+    max-height: 500px;
+    max-width: 500px;
+    width: auto;
+    height: auto;
+}
+
+.inline {
+    display: inline;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: transparent;
+}
+
+.border-admin {
+    border: solid #eae625 5px;
+}
+
+.border-certified {
+    border: solid yellow 5px;
+}
+
+@media only screen and (min-width: 601px) {
+    .container {
+        width: 85%;
+    }
+}

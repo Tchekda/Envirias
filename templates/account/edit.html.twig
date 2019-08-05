@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edition du Compte{% endblock %}
+{% block body %}
+    {{ form_start(userEditForm) }}
+    {{ form_widget(userEditForm) }}
+    <button class="btn green" type="submit">Enregistrer</button>
+    {{ form_end(userEditForm) }}
+
+{% endblock %}
+
+

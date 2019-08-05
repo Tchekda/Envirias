@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+    <div id="index-banner" class="parallax-container">
+        <div class="section no-pad-bot">
+            <div class="container">
+                {#                <h1 class="header center text-lighten-2">Envirias</h1>#}
+                {#                <div class="row center">#}
+                {#                    <h5 class="header-text col s12 light">Parce que l'environnement ne nous appartient pas, parce que#}
+                {#                        tout animal#}
+                {#                        mérite d'être entendu. <br> Agissons maintenant et gratuitement en nous regroupant</h5>#}
+                {#                </div>#}
+                {#                <div class="row center">#}
+                {#                    {% if is_granted('ROLE_USER') %}#}
+                {#                        <a href="#" class="header-btn btn-large waves-effect waves-light"#}
+                {#                           onclick="$('.tap-target').tapTarget('open')">Nouveau Post</a>#}
+                {#                    {% else %}#}
+                {#                        <a href="##discover" class="header-btn btn-large waves-effect waves-light">Découvrir#}
+                {#                            Envirias</a>#}
+                {#                    {% endif %}#}
+                {#                </div>#}
+                <br><br>
+            </div>
+        </div>
+        <div class="parallax"><img src="{{ asset('uploads/images/background3.jpg') }}"
+                                   alt="Bannière Principale"></div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+
+            <!--   Icon Section   -->
+            <div class="row">
+                <div class="col s12 l3">
+                    <div class="icon-block">
+                        <h2 class="center "><i class="material-icons green-text">flash_on</i></h2>
+                        <h5 class="center green-text">Tendances</h5>
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title center">Tags Tendance</span>
+                                <ul class="collection ">
+                                    {% for tag in tags %}
+                                        <li class="collection-item {{ loop.first ? 'active green' }}">
+                                            <a href="{{ path('tag_show', {'id': tag.0.id}) }}" {{ loop.first ? 'class="white-text"' : 'class="green-text"' }}>#{{ tag.0.name }}
+                                                <span class="{{ loop.first ? 'white-text ' }}badge">{{ tag.1 }}</span>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title center">Classement Utilisateurs Total</span>
+                                <ul class="collection">
+                                    {% for best_user in best_users_total %}
+                                        <li class="collection-item {{ loop.first ? 'active green' }}">
+                                            <a {{ loop.first ? 'class="white-text"' : 'class="green-text"' }}
+                                                    href="{{ path('user_show', {'id': best_user.id}) }}">{{ best_user.username }}
+                                                <span class="badge {{ loop.first ? 'white-text' }}">{{ best_user.totalScore }}</span></a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title center">Classement Utilisateurs Mensuel</span>
+                                <ul class="collection">
+                                    {% for best_user in best_users_month %}
+                                        <li class="collection-item {{ loop.first ? 'active green' }}">
+                                            <a {{ loop.first ? 'class="white-text"' : 'class="green-text"' }}
+                                                    href="{{ path('user_show', {'id': best_user.id}) }}">{{ best_user.username }}
+                                                <span class="badge {{ loop.first ? 'white-text' }}">{{ best_user.monthScore }}</span></a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col s12 l3 push-l6">
+                    <div class="icon-block">
+                        <h2 class="center"><i class="material-icons green-text">perm_identity</i></h2>
+                        <h5 class="center green-text">Mon Compte</h5>
+                        {% if is_granted('ROLE_USER') %}
+                            <div class="card">
+                                <div class="card-content">
+                                    <span class="card-title center primary-color">
+                                        <a class="green-text"
+                                           href="{{ path('myaccount') }}">{{ app.user.username }}</a></span>
+                                    <div class="badges center">
+                                        {% for badge in app.user.badges %}
+                                            <i class="material-icons tooltipped {{ badge.color }}-text {{ badge.bgColor }}"
+                                               data-position="top" data-tooltip="{{ badge.title }}">{{ badge.icon }}</i>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="center">
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            {% set border = 'border-admin' %}
+                                        {% elseif is_granted('ROLE_CERTIFIED') %}
+                                            {% set border = 'border-certified' %}
+                                        {% else %}
+                                            {% set border = '' %}
+                                        {% endif %}
+                                        <img src="{{ asset('uploads/users/'~ app.user.picture ) | imagine_filter('profile_thumb') }}"
+                                             class="circle responsive-img {{ border }}" width="110px"
+                                             alt="User Picture">
+                                    </div>
+                                    <p>Eco Score: <span
+                                                class="badge">{{ app.user.totalScore }} (+{{ app.user.monthScore }})</span>
+                                    </p>
+                                </div>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="card-action">
+                                        <a class="green-text" href="{{ path('admin_index') }}">Partie Admin</a>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        {% else %}
+                            <div class="card">
+                                <div class="card-content">
+                                    <span class="card-title center primary-color">Bienvenue sur Envirias</span>
+                                    {#                                    <div class="center">#}
+                                    {#                                        <img src="{{ asset('uploads/users/'~ app.user.picture ) }}"#}
+                                    {#                                             class="circle responsive-img" width="100px">#}
+                                    {#                                    </div>#}
+                                    <p><a href="{{ path('register') }}">Inscrivez vous pour rejoindre la communauté</a>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col s12 l6 pull-l3">
+                    <div class="icon-block center">
+                        <h2 class="center"><i class="material-icons green-text">fiber_new</i></h2>
+                        <h5 class="center green-text">Nouveaux Posts ({{ pagination.getTotalItemCount }})</h5>
+                        {% for post in pagination %}
+                            {% include 'post.html.twig' %}
+                        {% endfor %}
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <h5 class=" col s12">Il était temps d'agir et d'oser lancer quelques choses qui pourrait préserver
+                        l'avenir.
+                        C'est à ce moment précis où est né Envirias</h5>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="{{ asset('uploads/images/background2.jpg') }}"
+                                   alt="Transition background"></div>
+    </div>
+
+    <div class="container" id="#discover">
+        <div class="section">
+
+            <div class="row">
+                <div class="col s12 center" id="about">
+                    <h3><i class="mdi-content-send brown-text"></i></h3>
+                    <h4>Qui sommes-nous / Qu'est-ce que Envirias</h4>
+                    <p class="light">Nous sommes un plateforme qui permettra de protéger l'environnement à partir d'une
+                        seule communauté.
+                        Cumulez des Ecopoints en effectuant des bonnes actions afin d'obtenir des récompenses et des
+                        badges uniques</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <h5 class="col s12">"Agissons maintenant et gratuitement en nous regroupant."</h5>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="{{ asset('uploads/images/background1.jpg') }}"
+                                   alt="Transition background"></div>
+    </div>
+{% endblock %}

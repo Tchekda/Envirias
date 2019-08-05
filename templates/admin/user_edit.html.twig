@@ -1,0 +1,22 @@
+{% extends 'admin/base_admin.html.twig' %}
+{% block title %}Edition de Compte{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {{ form_start(userEditForm, {'attr': {'class': 'col s12'}}) }}
+        {{ form_widget(userEditForm) }}
+        <button class="btn green" type="submit">Enregistrer</button>
+        {{ form_end(userEditForm) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('#user_edit_form_biography').characterCounter();
+        });
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+
+    </script>
+{% endblock %}
