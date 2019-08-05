@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController {
 
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="homepage", options={"sitemap" = true})
      */
     public function index(PostRepository $postRepository, TagRepository $tagRepository, UserRepository $userRepository, PaginatorInterface $paginator, Request $request) {
         $pagination = $paginator->paginate(
@@ -46,45 +46,9 @@ class HomeController extends AbstractController {
         ]);
     }
 
-    /**
-     * @Route("/test/", name="test")
-     * @IsGranted("ROLE_USER")
-     */
-    public function test() {
-        $this->getUser()->setToken(bin2hex(random_bytes(10)));
-
-        $transport = new Swift_SendmailTransport();
-        $mailer = new Swift_Mailer($transport);
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('contact@envirias.com')
-            ->setTo("contact@tchekda.fr")
-            ->setBody(
-                $this->renderView(
-                // templates/emails/registration.html.twig
-                    'emails/registration.html.twig',
-                    ['user' => $this->getUser()]
-                ),
-                'text/html'
-            );
-        $mailer->send($message);
-//        $mail = mail(
-//            'contact@tchekda.fr',
-//            'Sujet',
-//            $this->renderView('emails/registration.html.twig', [
-//                'user' => $this->getUser()
-//            ]),
-//            'Content-type: text/html'
-//        );
-//        if (!$mail) {
-//            dd(error_get_last()['message']);
-//        }
-
-        return new Response("Sent");
-
-    }
 
     /**
-     * @Route("/rules", name="rules")
+     * @Route("/rules", name="rules", options={"sitemap" = true})
      */
     public function rules(){
         return $this->render('home/rules.html.twig', [

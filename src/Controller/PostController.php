@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class PostController
  * @package App\Controller
- * @IsGranted("ROLE_USER")
  */
 class PostController extends AbstractController {
 
@@ -29,7 +28,7 @@ class PostController extends AbstractController {
      */
     public function show(Post $post, LikeRepository $likeRepository) {
         $hasLiked = false;
-        if ($likeRepository->findOneBy(['post' => $post, 'user' => $this->getUser()])) {
+        if ($this->getUser() != null and $likeRepository->findOneBy(['post' => $post, 'user' => $this->getUser()])) {
             $hasLiked = true;
         }
         return $this->render('post/post.html.twig', [
@@ -40,6 +39,7 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/post/edit/{id}", name="post_edit", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Post $post, EntityManagerInterface $entityManager, Request $request, TagRepository $tagRepository) {
         if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) and $post->getUser() !== $this->getUser()) {
@@ -108,6 +108,7 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/post/new", name="post_new", methods={"POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request, TagRepository $tagRepository, EntityManagerInterface $em) {
         $post = new Post();
@@ -153,6 +154,7 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/post/delete/{id}", name="post_delete", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Post $post, EntityManagerInterface $entityManager) {
         if ($post->getUser() == $this->getUser()) {
@@ -177,6 +179,7 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/ajax/post/{id}/like", name="ajax_post_like", methods={"POST"}, requirements={"id"="\d+"})
+     * @IsGranted("ROLE_USER")
      */
     public function like(Post $post, LikeRepository $likeRepository, EntityManagerInterface $entityManager) {
 
@@ -218,9 +221,9 @@ class PostController extends AbstractController {
 
     /**
      * @Route("/tag/{id}", name="tag_show", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_USER")
      */
     public function postsByTag(Tag $tag, TagRepository $tagRepository) {
-//        dd($tagRepository->findAllPostByTag($tag));
         return $this->render('post/tag.html.twig', [
             'tag' => $tagRepository->findAllPostByTag($tag),
         ]);

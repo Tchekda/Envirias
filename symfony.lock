@@ -157,6 +157,9 @@
     "ocramius/proxy-manager": {
         "version": "2.2.2"
     },
+    "presta/sitemap-bundle": {
+        "version": "v1.7.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -192,6 +195,18 @@
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.1"
+    },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "c82bead70f9a4f656354a193df7bf0ca2114efa0"
+        },
+        "files": [
+            "./public/.htaccess"
+        ]
     },
     "symfony/asset": {
         "version": "v4.3.2"

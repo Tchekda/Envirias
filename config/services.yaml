@@ -6,6 +6,8 @@
 parameters:
     locale: 'fr'
     upload_directory: '%kernel.project_dir%/public/uploads'
+    router.request_context.host:   envirias.com
+    router.request_context.scheme: https
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -26,3 +28,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    app.sitemap.blog_post_subscriber:
+        class: App\EventSubscriber\SitemapSubscriber
+        arguments:
+            - "@router"
+            - '@App\Repository\PostRepository'
+        tags:
+            - { name: "kernel.event_subscriber", priority: 100 }
