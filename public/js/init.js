@@ -20,7 +20,7 @@
                 tags[tag.name] = null
             }
             let options = {
-                placeholder: 'Tags',
+                placeholder: 'Tags (sans #)',
                 autocompleteOptions: {
                     data: tags,
                     limit: 5,
