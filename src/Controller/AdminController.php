@@ -67,8 +67,8 @@ class AdminController extends AbstractController {
         $score = intval($request->request->get('value'));
         $post->getUser()->addScore($score);
         $count = intval($userRepository->countUsersValidatedPosts($post->getUser())[1]);
-        if ($count % 100 == 0) {
-            $count /= 100;
+        if ($count+1 % 100 == 0) {
+            $count/= 100;
             if ($count > 0) {
                 $post->getUser()->removeBadge($badgeRepository->findOneBy(['icon' => 'filter_' . $count]));
             }

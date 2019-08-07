@@ -59,26 +59,26 @@
                             <div class="section">
                                 {% if user.website %}
                                     <p class="inline">Site Web : <a href="https://{{ user.website }}"
-                                                     class="right">{{ user.website }}</a></p>
+                                                     class="right">{{ user.website }}</a></p><br>
                                 {% endif %}
                                 {% if user.twitter %}
                                     <p class="inline">Twittter : <a href="https://twitter.com/{{ user.twitter }}"
-                                                     class="right">{{ user.twitter }}</a></p>
+                                                     class="right">{{ user.twitter }}</a></p><br>
                                 {% endif %}
                                 {% if user.facebook %}
                                     <p class="inline">Facebook: <a href="https://facebook.com/{{ user.facebook }}"
-                                                    class="right">{{ user.facebook }}</a></p>
+                                                    class="right">{{ user.facebook }}</a></p><br>
                                 {% endif %}
                                 {% if user.instagram %}
-                                    <p class="inline">Intagram : <a href="https://intagram.com/{{ user.instagram }}"
-                                                     class="right">{{ user.instagram }}</a></p>
+                                    <p class="inline">Intagram : <a href="https://www.intagram.com/{{ user.instagram }}"
+                                                     class="right">{{ user.instagram }}</a></p><br>
                                 {% endif %}
                             </div>
                             {% endif %}
                         </div>
                         {% if app.user.id == user.id %}
                             <div class="card-action">
-                                <a class="green-text" href="{{ path('user_edit') }}">Modifier mes Information</a>
+                                <a class="green-text" href="{{ path('user_edit') }}">Modifier mes Information</a><br>
                                 <a class="orange-text" href="{{ path('user_password_change') }}">Modifier le mot de passe</a>
                             </div>
                         {% endif %}

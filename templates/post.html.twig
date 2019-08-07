@@ -1,13 +1,13 @@
 <div class="card">
     {% set liked = false %}
     <div class="card-content">
-        <span class="card-title">
+        <span class="center">
             {% if app.request.pathInfo != path('post_show', {'id': post.id}) %}
             <a class="grey-text" href="{{ path('post_show', {'id': post.id}) }}">
-                {{ post.content }}
+                <h5>{{ post.content|nl2br  }}</h5>
             </a>
             {% else %}
-                <p class="grey-text">{{ post.content }}</p>
+                <h5 class="grey-text">{{ post.content|nl2br }}</h5>
             {% endif %}
         </span>
         <p class="light">Par <a class="green-text

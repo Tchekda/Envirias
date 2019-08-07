@@ -39,7 +39,7 @@
                 {% for post in posts %}
                     <tr>
                         <td>{{ post.id }}</td>
-                        <td>Par <a href="{{ path('show_user', {'id': post.user.id}) }}">{{ post.user.username }}</a></td>
+                        <td>Par <a href="{{ path('user_show', {'id': post.user.id}) }}">{{ post.user.username }}</a></td>
                         {% if post.picture %}
                             <td><img src="{{ asset('uploads/posts/'~post.picture) }}" width="200px" alt=""></td>
                         {% else %}

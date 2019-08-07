@@ -31,16 +31,12 @@
                 let autocomplete = [],
                     tags = jQuery.parseJSON($('#post_form_newTags').val())
 
-                console.log(tags)
                 for (tag in tags) {
                     let value = tags[tag]['tag']
                     autocomplete.push({'tag': value})
-                    console.log(value)
                 }
-                console.log(autocomplete)
                 options['data'] = autocomplete
             }
-            console.log(options)
             $('.chips').chips(options);
 
         });
