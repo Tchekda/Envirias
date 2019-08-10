@@ -35,9 +35,15 @@ class UserEditFormType extends AbstractType {
             ->add('website', null, [
                 'label' => 'Site Web (sans le http(s)://)'
             ])
-            ->add('facebook')
-            ->add('twitter')
-            ->add('instagram')
+            ->add('facebook', null, [
+                'label' => 'Pseudo Facebook sans https://facebook.com'
+            ])
+            ->add('twitter', null, [
+                'label' => 'Pseudo Twitter sans https://twitter.com/'
+            ])
+            ->add('instagram', null, [
+                'label' => 'Pseudo Instagram sans https://instagram.com'
+            ])
             ->add('picture', FileType::class, [
                 'mapped' => false,
                 'label' => false,

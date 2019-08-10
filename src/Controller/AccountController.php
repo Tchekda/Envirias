@@ -53,6 +53,9 @@ class AccountController extends AbstractController {
             /** @var User $user */
             $user = $form->getData();
             /** @var UploadedFile $picture */
+            if ($website = $user->getWebsite()){
+                $user->setWebsite(preg_replace('#^https?://#', '', $website));
+            }
             if ($picture = $form['picture']->getData()) {
                 if ($user->getPicture() != 'default.png') {
                     unlink($this->getParameter('upload_directory') . '/users/' . $user->getPicture());
