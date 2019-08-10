@@ -15,11 +15,11 @@ class TagFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             /** @var Post $post */
-            $post = $this->getReference(Post::class . '_' . $faker->numberBetween(0, 9));
+            $post = $this->getReference(Post::class . '_' . $faker->numberBetween(0, 29));
             $tag = new Tag();
-            $name = $faker->word;
+            $name = $faker->unique()->word;
             $tag->setName($name);
             $tag->setCanonical(strtolower($name));
             $post->addTag($tag);

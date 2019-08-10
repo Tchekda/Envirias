@@ -25,17 +25,17 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        for ($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 30; $i++){
             $user = new User();
             $user->setUsername($faker->userName)
-                 ->setTotalScore($faker->randomFloat(1, 0, 100))
-                 ->setMonthScore($faker->randomFloat(1, 0, 100))
+                 ->setTotalScore($faker->numberBetween(0, 100))
+                 ->setMonthScore($faker->numberBetween(0, 100))
                  ->setEmail($faker->email)
                  ->setPassword($this->passwordEncoder->encodePassword($user, $faker->password))
                  ->setValidated(true);
-            if ($faker->boolean(20)){
+            if ($faker->boolean(50)){
                 $user->addBadge($this->getReference(Badge::class . '_' . "certified"));
-            }elseif ($faker->boolean(20)){
+            }elseif ($faker->boolean(50)){
                 $user->addBadge($this->getReference(Badge::class . '_' . "donnator"));
             }
             $manager->persist($user);

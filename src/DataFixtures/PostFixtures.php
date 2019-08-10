@@ -15,13 +15,13 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
 
-        for ($i=0; $i < 10; $i++){
+        for ($i=0; $i < 30; $i++){
             $post = new Post();
             $post->setContent($faker->paragraph);
             /** @var User $user */
-            $user = $this->getReference(User::class . '_' . $faker->numberBetween(0, 9));
+            $user = $this->getReference(User::class . '_' . $faker->numberBetween(0, 29));
             $post->setUser($user);
-            if ($faker->boolean(70)){
+            if ($faker->boolean(80)){
                 $post->setValidated(true);
             }
             $manager->persist($post);

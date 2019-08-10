@@ -142,6 +142,30 @@
                         <h5 class="center green-text">Nouveaux Posts ({{ pagination.getTotalItemCount }})</h5>
                         {% for post in pagination %}
                             {% include 'post.html.twig' %}
+                            {% if random(0, 20) == 17 and app.environment != 'dev' %}
+                                <div class="card">
+                                    {% set liked = false %}
+                                    <div class="card-content">
+                                        <span class="center">
+                                            <script async
+                                                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                            <ins class="adsbygoogle"
+                                                 style="display:block"
+                                                 data-ad-format="fluid"
+                                                 data-ad-layout-key="-1z+1s-j8+to+9d"
+                                                 data-ad-client="ca-pub-1896950076110260"
+                                                 data-ad-slot="2681124228"></ins>
+                                            <script>
+                                                (adsbygoogle = window.adsbygoogle || []).push({});
+                                            </script>
+                                        </span>
+                                    </div>
+                                    <div class="card-action center">
+                                        Publicité
+                                    </div>
+                                </div>
+
+                            {% endif %}
                         {% endfor %}
                         {{ knp_pagination_render(pagination) }}
                     </div>

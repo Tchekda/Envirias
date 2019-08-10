@@ -15,11 +15,13 @@ class LikeFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 50; $i++) {
             $like = new Like();
-            $post = $this->getReference(Post::class . '_' . $faker->numberBetween(0, 9));
+            /** @var Post $post */
+            $post = $this->getReference(Post::class . '_' . $faker->numberBetween(0, 29));
             $like->setPost($post);
-            $user = $this->getReference(User::class . '_' . $faker->numberBetween(0, 9));
+            /** @var Post $post */
+            $user = $this->getReference(User::class . '_' . $faker->numberBetween(0, 29));
             $like->setUser($user);
             $manager->persist($like);
         }
